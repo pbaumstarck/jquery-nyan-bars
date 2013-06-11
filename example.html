@@ -1,7 +1,7 @@
 <html>
   <head>
     <script type="text/javascript" src="jquery_1_10_1.min.js"></script>
-    <script type="text/javascript" src="nyanbar.js"></script>
+    <script type="text/javascript" src="jquery.nyanbar.js"></script>
     <style type="text/css">
       body, #text {
         font-family: Courier;
@@ -162,9 +162,9 @@
         $("#" + id + " .title").html(obj.name);
         $("#" + id + " .pattern").html(
             obj.pattern ? obj.pattern : obj.patterns.join("<br>"));
-        var bar = obj.pattern ? parseNyanBar(obj.pattern) : new MultiSegment({
-          bars: obj.patterns
-        });
+        // var bar = obj.pattern ? parseNyanBar(obj.pattern) : new MultiSegment({
+          // bars: obj.patterns
+        // });
         if (enableSave) {
           $("#" + id + " .save").click(function() {
             // Insert this thing.
@@ -174,17 +174,31 @@
         $("#" + id + " .close").click(function() {
           $("#" + id).remove();
         });
-        progressBar({
-          div: $("#" + id + " .live-bar"),
-          nyanBar: bar.clone(),
+        // progressBar({
+        //   div: $("#" + id + " .live-bar"),
+        //   nyanBar: bar.clone(),
+        //   charSize: charSize,
+        //   progressFunction: getProgressFunction(),
+        //   showProgress: true
+        // });
+        $("#" + id + " .live-bar").nyanBar({
           charSize: charSize,
+          pattern: obj.pattern,
+          patterns: obj.patterns,
           progressFunction: getProgressFunction(),
           showProgress: true
         });
-        progressBar({
-          div: $("#" + id + " .stalled-bar"),
-          nyanBar: bar.clone(),
+        // progressBar({
+        //   div: $("#" + id + " .stalled-bar"),
+        //   nyanBar: bar.clone(),
+        //   charSize: charSize,
+        //   progressFunction: function() { return 50; },
+        //   showProgress: true
+        // });
+        $("#" + id + " .stalled-bar").nyanBar({
           charSize: charSize,
+          pattern: obj.pattern,
+          patterns: obj.patterns,
           progressFunction: function() { return 50; },
           showProgress: true
         });
@@ -196,24 +210,22 @@
         placeBar(div, bars[i]);
       }
 
-      var lastCustom = parseNyanBar();
+      // var lastCustom = parseNyanBar();
       $("#text").keyup(function(e) {
         var id = "id" + ("" + Math.random()).substr(2);
         var patterns = $(this).val().split(/\n/);
         console.log(patterns);
         try {
-          lastCustom = new MultiSegment({
-            bars: patterns
-          });
+          var leDiv = $("#customBars");
+          leDiv.empty();
+          placeBar(leDiv, {
+            name: "Your custom progress bar",
+            patterns: patterns
+          }, false, true);
         } catch (e) {
           // Keep the last valid thing.
+          return;
         }
-        var leDiv = $("#customBars");
-        leDiv.empty();
-        placeBar(leDiv, {
-          name: "Your custom progress bar",
-          patterns: patterns
-        }, false, true);
         //$("#customBars").append("<div id=\"" + id + "\"></div>");
         //$("#" + id).html("GAR:");
       });

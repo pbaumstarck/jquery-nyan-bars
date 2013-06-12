@@ -258,65 +258,6 @@
   };
 
 
-  if (false) {
-    var key = "KHAN!";
-    var root = new Segment({
-      text: key.charAt(0)
-    });
-    for (var j = 0; j <= 2; ++j) {
-      var animation;
-      if (j == 0) {
-        animation = EAnimation.NONE;
-      } else if (j == 1) {
-        animation = EAnimation.REGULAR;
-      } else {
-        animation = EAnimation.UNIFORM;
-      }
-      var rootClone = root.clone();
-      var node = rootClone;
-      for (var i = 1; i < key.length; ++i) {
-        if (i == 2) {
-          node = new Segment({
-            fecund: true,
-            last: node,
-            animation: animation,
-            windows: ["_", "\\", "/"]
-          });
-        } else if (i == 2) {
-          var _char = key.charAt(i);
-          node = new Segment({
-            fecund: true,
-            last: node,
-            animation: animation,
-            windows: [_char.toUpperCase(), _char.toLowerCase()]
-          });
-        } else if (i == key.length - 1) {
-          node = new Segment({
-            last: node,
-            windows: ["!", "?"],
-            animation: animation
-          });
-        } else {
-          node = new Segment({
-            fecund: i == 2,
-            last: node,
-            text: key.charAt(i)
-          });
-        }
-      }
-      console.log(rootClone.getSequenceString());
-
-      for (var i = 0; i < 8; ++i) {
-        rootClone.update(3);
-        console.log(rootClone.getSequenceString());
-      }
-      for (var i = 0; i < 4; ++i) {
-        rootClone.update();
-        console.log(rootClone.getSequenceString());
-      }
-    }
-  }
-
   function parseNyanBar(text) {
     // Use the arguments to make a new head node and attach it to the list,
     // updating all members.
@@ -352,14 +293,6 @@
     }
     for (; ix < text.length; ++ix) {
       var c = text.charAt(ix);
-      if (false) {
-        console.log("ix:" + ix + " c:" + c + " E:" + (escaped ? "1" : "0") +
-            " R:" + (root ? "1" : "0") + " T:" + (tail ? "1" : "0") +
-            " HA:" + (headArgs ? "1" : "0") + " JC:" + (justCompleted ? "1" : "0") +
-            " CC:" + (headArgs ? headArgs.closeChar : "") +
-            " W:" + (headArgs ? (headArgs.windows.length ? "1" : "0") : "-") +
-            " AF:" + (anyFecund ? "1" : "0") + " B: " + buffer);
-      }
       if (escaped) {
         buffer += c;
         justCompleted = null;
@@ -476,56 +409,6 @@
     return root;
   }
 
-  // [A|a] -> No animation, just pick values upon creation. // Meaningless.
-  // [A|a]* -> No animation, just pick values upon creation.
-  // {A|a}* -> Replication,
-
-  // NEED:
-  // - Replication, no animation. --> [asdf]*
-  // - Replication, individual animation. --> [A|a]*
-  // - Replication, synchronized animation. --> {A|a}*
-  // - No replication, animation. --> [A|a], {A|a}
-
-  // [A|a] -> Animated single cell.
-  // [A|a]* -> Replication, and uniform single cells.
-  // {A|a}* -> Replication, and individual animation of cells.
-  // {{A|a}}* -> Replication, and uniform animation of cells.
-  var nyanBars = [
-      "KHAN!",
-      "KHA*N!",
-      "KHA\\*N!",
-      "*KHA\\**N!",
-      "single square: [A|a].",
-      "single curly: {A|a}.",
-      "double curly: {{A|a}}.",
-      "single square star: [A|a]*.",
-      "single curly star: {A|a}*.",
-      "double curly star: {{A|a}}*.",
-      new MultiSegment({
-        patterns: ["[/|\\\\]*", "[\\\\|/]*"]
-      })
-      //"~*",
-      //"[~|=]*\\[[.|,]x[,|.]\\][:|:|:|\\|]3",
-      //"{_|/|\\\\|_}*"
-  ];
-  for (var j = 0; j < nyanBars.length; ++j) {
-    var nyanBar = nyanBars[j];
-    if (typeof nyanBar == "string") {
-      nyanBar = parseNyanBar(nyanBar);
-    }
-    console.log(nyanBar.getSequenceString());
-    for (var i = 0; i < 4; ++i) {
-      nyanBar.update(4);
-      console.log(nyanBar.getSequenceString());
-      nyanBar.update(3);
-      console.log(nyanBar.getSequenceString());
-    }
-    for (var i = 0; i < 4; ++i) {
-      nyanBar.update(0);
-      console.log(nyanBar.getSequenceString());
-    }
-  }
-
   $.fn.nyanBar = function(options) {
     this.each(function() {
       if (options === undefined) {
@@ -545,7 +428,7 @@
           try {
             nyanBar = parseNyanBar(options.pattern);
           } catch (e) {
-            console.log("Error parsing Nyan Bar: '" + options.pattern + "'");
+            //console.log("Error parsing Nyan Bar: '" + options.pattern + "'");
           }
         } else {
           nyanBar = options.pattern;

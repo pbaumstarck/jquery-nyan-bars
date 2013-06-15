@@ -419,7 +419,7 @@
       var charSize = options.charSize || 100;
       var updatePeriod = options.updatePeriod || 500;
       var progressFunction = options.progressFunction || function() { return 0; };
-      var bookends = options.bookends || "|";
+      var bookends = options.bookends !== undefined ? options.bookends : "|";
       var showProgress = options.showProgress || false;
       var doneFunction = options.doneFunction;
       var nyanBar = null;

@@ -1,0 +1,31 @@
+{
+    "name": "nyanbars",
+    "title": "jQuery Nyan Bars",
+    "description": "jQuery plugin for animated text and progress bars parsed from a simple string language.",
+    "keywords": [
+        "animation",
+        "progress",
+        "progressbar",
+        "parser",
+        "text",
+        "animatedtext"
+    ],
+    "version": "1.0.1",
+    "author": {
+        "name": "Paul Baumstarck",
+        "url": "https://github.com/pbaumstarck"
+    },
+    "licenses": [
+        {
+            "type": "BSD",
+            "url": "https://github.com/pbaumstarck/jquery-nyan-bars/blob/master/license.md"
+        }
+    ],
+    "bugs": "https://github.com/pbaumstarck/jquery-nyan-bars/issues",
+    "homepage": "https://github.com/pbaumstarck/jquery-nyan-bars",
+    "docs": "https://github.com/pbaumstarck/jquery-nyan-bars/blob/master/README.md",
+    "download": "https://github.com/pbaumstarck/jquery-nyan-bars/zipball/master",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}

@@ -1,7 +1,9 @@
 jquery-nyan-bars
 ================
 
-Animated text progress bars parsed from a simple string language.
+Animated text and progress bars parsed from a simple string language.
+
+View a demo instance at: http://nyanbars.appspot.com/
 
 Create a progress bar:
 
